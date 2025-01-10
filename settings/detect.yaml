@@ -1,0 +1,10 @@
+cfg: yolov3.cfg
+weights: ../weights/yolov3m-best.pt
+
+gpu_index: 1
+
+out_dir: output
+source: ../yolov3/data/samples
+
+conf_thres: 0.3
+iou_thres: 0.6
