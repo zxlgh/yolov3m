@@ -22,7 +22,7 @@ def setup(rank, world_size):
 def train(rank, world_size, opt):
 
     
-    init_seeds()
+    init_seeds(opt["seed"])
     setup(rank, world_size)
     torch.cuda.set_device(rank)
 
@@ -156,6 +156,7 @@ def train(rank, world_size, opt):
         scheduler.step()
         ema.update_attr(model)
         if rank == 0:
+            torch.save(ema.ema.module.state_dict() if hasattr(model, 'module') else ema.ema.state_dict(), opt["save_model"]+"-latest.pt")
             results, maps = evaluate(opt, ema.ema, val_loader)
             with open('results.txt', 'a') as f:
                 f.write(s + '%10.3g' * 7 % results + '\n') # P, R, mAP, F1, test_losses=(GIoU, obj, cls)
@@ -163,17 +164,16 @@ def train(rank, world_size, opt):
             fi = fitness(np.array(results).reshape(1, -1))  # fitness_i = weighted combination of [P, R, mAP, F1]
             if fi > best_fitness:
                 best_fitness = fi
-                torch.save(ema.ema.module.state_dict() if hasattr(model, 'module') else ema.ema.state_dict(), opt["save_model"])
+                torch.save(ema.ema.module.state_dict() if hasattr(model, 'module') else ema.ema.state_dict(), opt["save_model"]+"-best.pt")
 
     dist.destroy_process_group()
 
 
 
 if __name__ == '__main__':
-    with open('settings.yaml', 'r') as f:
+    with open("settings/clean.yaml", 'r') as f:
         opt = yaml.safe_load(f)
 
     WORLD_SIZE = torch.cuda.device_count()
     mp.spawn(train, args=(WORLD_SIZE, opt), nprocs=WORLD_SIZE, join=True)
-    # train(opt)
     

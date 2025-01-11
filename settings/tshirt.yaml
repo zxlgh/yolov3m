@@ -1,8 +1,7 @@
-train_path: ../data/coco2014/trainvalno5k.txt
+train_path: ../data/coco2014/trainvalno5k-tshirt.txt
 val_path: ../data/coco2014/5k.txt
 
 classes: 80
-
 
 img_size: 416
 batch_size: 32
@@ -35,7 +34,7 @@ weights: ../weights/darknet53.conv.74
 freeze_layers: false
 
 epochs: 300
-save_model: weights/yolov3m
+save_model: ../weights/yolov3m-tshirt
 
 seed: 123
 gpu_index: 1
