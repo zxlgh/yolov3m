@@ -35,7 +35,7 @@ weights: ../weights/darknet53.conv.74
 freeze_layers: false
 
 epochs: 300
-save_model: weights/yolov3m
+save_model: ../weights/yolov3m
 
 seed: 123
 gpu_index: 1
