@@ -28,6 +28,7 @@ def detect(opt):
     model.load_state_dict(torch.load(opt["weights"], weights_only=False))
     model.cuda().eval()
 
+    vid_path, vid_writer = None, None
     dataset = LoadImages(opt["source"])
 
     with open("settings/names.yaml", 'r') as f:
@@ -64,12 +65,25 @@ def detect(opt):
 
             print("%s Done." % s)
 
-            cv2.imwrite(save_path, im0)
+            if dataset.mode == "images":
+                cv2.imwrite(save_path, im0)
+            else:
+                if vid_path != save_path:  # new video
+                    vid_path = save_path
+                    if isinstance(vid_writer, cv2.VideoWriter):
+                        vid_writer.release()  # release previous video writer
+
+                    fps = vid_cap.get(cv2.CAP_PROP_FPS)
+                    w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                    h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                    vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*opt["fourcc"]), fps, (w, h))
+                vid_writer.write(im0)
 
 
 if __name__ == '__main__':
     with open("settings/detect.yaml") as f:
         opt = yaml.safe_load(f.read())
 
-    detect(opt)
+    with torch.no_grad():
+        detect(opt)
     

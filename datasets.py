@@ -94,6 +94,7 @@ class LoadImages:  # for inference
 
         else:
             # Read image
+            self.mode = "images"
             self.count += 1
             img0 = cv2.imread(path)  # BGR
             assert img0 is not None, 'Image Not Found ' + path
