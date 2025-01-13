@@ -1,9 +1,9 @@
 cfg: yolov3.cfg
-weights: ../weights/yolov3m-best.pt
+weights: ../weights/tshirt-yolov3.pt
 
 gpu_index: 1
 
-out_dir: output
+out_dir: ../output
 source: ../data/tshirt/test_video/video1/
 fourcc: mp4v
 
