@@ -1,7 +1,7 @@
-train_path: ../data/coco2014/trainvalno5k.txt
-val_path: ../data/coco2014/5k.txt
+train_path: ../data/VOCdevkit/VOC2012/train.txt
+val_path: ../data/VOCdevkit/VOC2012/val.txt
 
-classes: 80
+classes: 20
 
 
 img_size: 416
@@ -35,9 +35,9 @@ weights: ../weights/darknet53.conv.74
 freeze_layers: false
 
 epochs: 300
-save_model: ../weights/yolov3m
+save_model: ../weights/yolov3m-voc
 
 seed: 123
 gpu_index: 1
 
-result_file: result-clean.txt
+result_file: result-clean-voc.txt

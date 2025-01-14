@@ -2,7 +2,7 @@ import yaml
 from tqdm import tqdm
 
 from models import Darknet, YOLOLayer
-from datasets import LoadImagesAndLabels
+from datasets2 import LoadImagesAndLabels
 from utils import *
 from eval import evaluate
 
@@ -47,8 +47,7 @@ def train(rank, world_size, opt):
     val_loader = torch.utils.data.DataLoader(LoadImagesAndLabels(opt["val_path"],
                                                                  img_size=opt['img_size'],
                                                                  batch_size=2*opt["batch_size"],
-                                                                 hyp=opt,
-                                                                 rect=True),
+                                                                 hyp=opt),
                                              batch_size=opt["batch_size"],
                                              num_workers=opt["num_workers"],
                                              pin_memory=True,
