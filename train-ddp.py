@@ -158,7 +158,7 @@ def train(rank, world_size, opt):
         if rank == 0:
             torch.save(ema.ema.module.state_dict() if hasattr(model, 'module') else ema.ema.state_dict(), opt["save_model"]+"-latest.pt")
             results, maps = evaluate(opt, ema.ema, val_loader)
-            with open('results.txt', 'a') as f:
+            with open(opt["result_file"], 'a') as f:
                 f.write(s + '%10.3g' * 7 % results + '\n') # P, R, mAP, F1, test_losses=(GIoU, obj, cls)
             # Update best mAP
             fi = fitness(np.array(results).reshape(1, -1))  # fitness_i = weighted combination of [P, R, mAP, F1]

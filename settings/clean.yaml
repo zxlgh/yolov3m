@@ -39,3 +39,5 @@ save_model: ../weights/yolov3m
 
 seed: 123
 gpu_index: 1
+
+result_file: result-clean.txt
