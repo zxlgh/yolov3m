@@ -2,7 +2,7 @@ import yaml
 from tqdm import tqdm
 
 from models import Darknet, YOLOLayer
-from datasets2 import LoadImagesAndLabels
+from yolov3m.datasets import LoadImagesAndLabels
 from utils import *
 from eval import evaluate
 
