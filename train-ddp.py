@@ -2,7 +2,7 @@ import yaml
 from tqdm import tqdm
 
 from models import Darknet, YOLOLayer
-from yolov3m.datasets import LoadImagesAndLabels
+from datasets import LoadImagesAndLabels
 from utils import *
 from eval import evaluate
 
@@ -94,7 +94,7 @@ def train(rank, world_size, opt):
     scheduler = optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)
 
     # Model parameters
-    model.nc = 80  # attach number of classes to model
+    model.nc = 20  # attach number of classes to model
     model.gr = 1.0  # giou loss ratio (obj_loss = 1.0 or giou)
     model.hyp = opt
     model.cuda()
