@@ -290,7 +290,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         self.mosaic = self.augment and not self.rect  # load 4 images at a time into a mosaic (only during training)
 
         # Define labels
-        self.label_files = [x.replace('images', 'labels').replace(os.path.splitext(x)[-1], '.txt')
+        self.label_files = [x.replace('JPEGImages', 'Annotations').replace(os.path.splitext(x)[-1], '.txt')
                             for x in self.img_files]
 
         # Read image shapes (wh)

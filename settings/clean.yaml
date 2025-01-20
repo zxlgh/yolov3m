@@ -1,5 +1,5 @@
-train_path: ../data/VOCdevkit/VOC2012/train.txt
-val_path: ../data/VOCdevkit/VOC2012/val.txt
+train_path: ./train.txt
+val_path: ./val.txt
 
 classes: 20
 

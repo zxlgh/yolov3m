@@ -284,7 +284,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         self.hyp = hyp
 
         # Define labels
-        self.label_files = [x.replace('images', 'labels').replace(os.path.splitext(x)[-1], '.txt')
+        self.label_files = [x.replace('JPEGImages', 'Annotations').replace(os.path.splitext(x)[-1], '.txt')
                             for x in self.img_files]
 
         # Read image shapes (wh)
@@ -313,7 +313,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
                 self.labels = x
                 labels_loaded = True
         else:
-            s = path.replace('images', 'labels')
+            s = path.replace('JPEGImages', 'Annotations')
 
         pbar = tqdm(self.label_files)
         for i, file in enumerate(pbar):
@@ -361,8 +361,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
     #     return self
 
     def __getitem__(self, index):
-        if self.image_weights:
-            index = self.indices[index]
+        
 
         hyp = self.hyp
         
@@ -370,7 +369,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         img, (h0, w0), (h, w) = load_image(self, index)
 
         # Letterbox
-        shape = self.batch_shapes[self.batch[index]] if self.rect else self.img_size  # final letterboxed shape
+        shape = self.img_size  # final letterboxed shape
         img, ratio, pad = letterbox(img, shape, auto=False, scaleup=self.augment)
         shapes = (h0, w0), ((h / h0, w / w0), pad)  # for COCO mAP rescaling
 
